@@ -1,0 +1,83 @@
+
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Participants</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="setAddGuest()">
+        <ion-icon ios="ios-add-circle" md="md-add-circle"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+
+  <ion-card class="add-guest-form" *ngIf="activeAddGuest">
+
+    <ion-card-content>
+
+      <ion-item>
+        <ion-input class="bordureBottom" [(ngModel)]="nomGuest" type="text"
+                   placeholder="Nom du Participant"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input class="bordureBottom" [(ngModel)]="prenomGuest" type="text"
+                   placeholder="Prénom du Participant"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input class="bordureBottom" [(ngModel)]="emailGuest" type="text"
+                   placeholder="Email du Participant"></ion-input>
+      </ion-item>
+
+      <button ion-button color="primary"
+              block [disabled]="!nomGuest || !prenomGuest || !emailGuest"
+               (click)="addGuest(nomGuest, prenomGuest, emailGuest)">
+        Ajouter Participant
+      </button>
+
+    </ion-card-content>
+
+  </ion-card>
+
+  <ion-card>
+
+    <ion-card-header>
+      {{currentEvent.nomEvent}} le {{currentEvent.dateEvent}}
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <ion-list>
+
+      <ion-item  class="bordureBottom" *ngFor="let guest of guestList">
+        <p class="bordeau"><strong>{{guest?.nom}} {{guest?.prenom}} - {{guest?.email}}</strong></p>
+
+        <button ion-button color="primary" clear (click)="editGuest(guest.id)">
+          Editer
+        </button>
+
+        <button ion-button color="primary" clear (click)="deleteGuest(guest.id)">
+          Supprimer
+        </button>
+
+      </ion-item>
+
+      <ion-item *ngIf="currentEvent.inscritsEvent==0">
+        <p>Pas de participant inscrit à cet Event.</p>
+      </ion-item>
+
+      </ion-list>
+
+    </ion-card-content>
+
+  </ion-card>
+
+
+
+</ion-content>

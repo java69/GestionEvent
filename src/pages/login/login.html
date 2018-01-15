@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Authentification</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <form [formGroup]="loginForm" (submit)="connexion()" novalidate>
+
+    <ion-item>
+      <ion-label stacked>Email</ion-label>
+      <ion-input formControlName="email" type="email"
+                 placeholder="Votre email"
+                 [class.invalid]="!loginForm.controls.email.valid && blur">
+      </ion-input>
+    </ion-item>
+
+    <ion-item class="error-message" *ngIf="!loginForm.controls.email.valid &&
+                                    loginForm.controls.email.dirty">
+      <p>Entrez une addresse mail valide.</p>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Mot de passe</ion-label>
+      <ion-input formControlName="password" type="password" placeholder="Votre mot de passe"
+                 [class.invalid]="!loginForm.controls.password.valid && blur">
+      </ion-input>
+    </ion-item>
+
+    <ion-item class="error-message" *ngIf="!loginForm.controls.password.valid
+                                    && loginForm.controls.password.dirty">
+      <p>le mot de passe doit contenir au moins 6 caractères.</p>
+    </ion-item>
+
+    <button ion-button block outline type="submit" [disabled]="!loginForm.valid">
+      Se connecter
+    </button>
+
+  </form>
+
+  <button ion-button block clear (click)="newCompte()">
+    Créer un nouveau compte
+  </button>
+
+  <button ion-button block clear (click)="resetMotDePasse()">
+    Mot de passe oublié
+  </button>
+
+</ion-content>

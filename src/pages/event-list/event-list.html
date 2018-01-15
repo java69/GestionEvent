@@ -1,0 +1,45 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Mes Events</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+
+    <ion-card *ngFor="let event of eventList">
+
+      <ion-card-header class="titre">{{event?.nom}}</ion-card-header>
+
+      <ion-card-content>
+
+        <p>Date: <strong>{{event?.date}}</strong></p>
+        <p>Lieu: <strong>{{event?.lieu}}</strong></p>
+        <p class="bleu" (click)="goToLocalisationPage(event.lieu)">Localisation
+          <ion-icon ios="ios-pin" md="md-pin" icon-end=""></ion-icon></p>
+
+        <p>Horaire: <strong>{{event?.horaire}}</strong></p>
+        <ion-col col-5>Inscrits: <strong>{{event?.inscrits}}</strong></ion-col>
+
+        <ion-col col-7 *ngIf="event?.etat==1" class="vert">
+          - Places disponibles
+        </ion-col>
+
+        <ion-col col-7 *ngIf="event?.etat==0" class="rouge">
+          Complet
+        </ion-col>
+
+        <ion-row *ngIf="event">
+           <ion-col col-4>
+              <button ion-button color="primary" clear (click)="goToEventDetail(event.id)">
+                Détails
+              </button>
+            </ion-col>
+        </ion-row>
+
+        </ion-card-content>
+
+    </ion-card>
+
+</ion-content>

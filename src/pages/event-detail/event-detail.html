@@ -1,0 +1,69 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Détails</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+
+  <ion-card>
+
+    <ion-card-header class="titre">
+      {{currentEvent?.nomEvent}}
+    </ion-card-header>
+
+    <ion-card-content>
+
+       <p>Coût = {{currentEvent?.coutEvent}} €</p>
+
+      <p [class.gain]="currentEvent?.beneficeEvent > 0"
+         [class.perte]="currentEvent?.beneficeEvent <= 0">
+        Gain actuel = {{currentEvent?.beneficeEvent}} €</p>
+      <br>
+
+      <p>Date: <strong>{{currentEvent?.dateEvent}}</strong></p>
+      <p>Lieu: <strong>{{currentEvent?.adresseEvent}}</strong></p>
+      <p class="bleu" (click)="goToLocalisationPage(currentEvent.adresseEvent)">Localisation:
+        <ion-icon ios="ios-pin" md="md-pin"  icon-end=""></ion-icon></p>
+      <p>Horaire: <strong>{{currentEvent?.horaireEvent}}</strong></p>
+      <p>Prix de la place: <strong>{{currentEvent?.prixEvent}} €</strong></p>
+      <p>Nombre de places: <strong>{{currentEvent?.nbPlacesEvent}}</strong></p>
+
+      <ion-row>
+        <ion-col col-5>
+          Inscrits: <strong>{{currentEvent?.inscritsEvent}}</strong>
+        </ion-col>
+
+        <ion-col col-7 *ngIf="currentEvent?.etatEvent==1" class="gain">
+          - Places disponibles
+        </ion-col>
+
+        <ion-col col-7  *ngIf="currentEvent?.etatEvent==0" class="perte">
+          Complet
+        </ion-col>
+
+      </ion-row>
+
+      <ion-row>
+
+        <ion-col col-6>
+          <button ion-button color="primary" clear (click)="goToUpdateEventPage(currentEvent.id)">
+            Éditer
+          </button>
+        </ion-col>
+
+        <ion-col col-6>
+          <button ion-button color="primary" clear (click)="goToGuestsPage(currentEvent.id)">
+            Participants ({{currentEvent?.inscritsEvent}})
+          </button>
+        </ion-col>
+
+      </ion-row>
+
+    </ion-card-content>
+
+  </ion-card>
+
+ </ion-content>

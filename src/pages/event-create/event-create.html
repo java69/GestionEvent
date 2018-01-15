@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Création Event</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-list>
+
+  <ion-item>
+    <ion-label stacked>Nom Event</ion-label>
+    <ion-input [(ngModel)]="nomEvent" type="text"
+               placeholder="Le nom de votre Event">
+    </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label stacked>Lieu</ion-label>
+    <ion-input [(ngModel)]="adresseEvent" type="text"
+               placeholder="Adresse de votre Event">
+    </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Date Event</ion-label>
+    <ion-datetime displayFormat="DD MMM, YYYY" pickerFormat="DD MMM YYYY"
+                  [(ngModel)]="dateEvent">
+    </ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label stacked>Prix</ion-label>
+    <ion-input [(ngModel)]="prixEvent" type="number"
+               placeholder="le prix de la place">
+    </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label stacked>Coût</ion-label>
+    <ion-input [(ngModel)]="coutEvent" type="number"
+               placeholder="Coût de votre investissement">
+    </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label stacked>Horaire</ion-label>
+    <ion-input [(ngModel)]="horaireEvent" type="text"
+               placeholder="Horaire de l'Évent">
+    </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label stacked>Places</ion-label>
+    <ion-input [(ngModel)]="nbPlacesEvent" type="number"
+               placeholder="Nombre de places">
+    </ion-input>
+  </ion-item>
+
+  </ion-list>
+
+  <button ion-button block (click)="createEvent(nomEvent, adresseEvent, dateEvent, horaireEvent, prixEvent,
+    coutEvent, nbPlacesEvent)" [disabled]="!nomEvent || !adresseEvent || !dateEvent
+     || !prixEvent || !coutEvent || !horaireEvent || !nbPlacesEvent">
+    Valider
+  </button>
+
+</ion-content>

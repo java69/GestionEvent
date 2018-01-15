@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-navbar color="dark">
+
+    <ion-title>Accueil</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="goToProfile()">
+        <ion-icon name="person"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-card>
+    <img src="assets/imgs/event1.jpg"/>
+    <ion-card-content>
+      <ion-card-title class="titre">GESTION EVENTS</ion-card-title>
+    </ion-card-content>
+  </ion-card>
+
+  <button ion-button block outline color="primary" (click)="goToCreateEvent()">
+    Ajouter Event
+  </button>
+  <button ion-button block outline color="primary" (click)="goToListEvents()">
+    Mes Events
+  </button>
+
+
+
+</ion-content>

@@ -1,0 +1,46 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Nouveau Compte</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+
+  <img src="assets/imgs/signup.png" />
+
+  <form [formGroup]="signupForm" (submit)="creationCompte()" novalidate>
+
+    <ion-item>
+      <ion-label stacked>Email</ion-label>
+      <ion-input formControlName="email" type="email"
+                 placeholder="Votre email"
+                 [class.invalid]="!signupForm.controls.email.valid && blur">
+      </ion-input>
+    </ion-item>
+
+    <ion-item class="error-message" *ngIf="!signupForm.controls.email.valid && signupForm.controls.email.dirty">
+      <p>Entrez une addresse mail valide.</p>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Mot de passe</ion-label>
+      <ion-input formControlName="password" type="password"
+                 placeholder="Votre mot de passe"
+                 [class.invalid]="!signupForm.controls.password.valid && blur">
+      </ion-input>
+    </ion-item>
+
+    <ion-item class="error-message"
+              *ngIf="!signupForm.controls.password.valid && signupForm.controls.password.dirty">
+      <p>le mot de passe doit contenir au moins 6 caractères.</p>
+    </ion-item>
+    <br><br>
+    <button ion-button block outline type="submit" [disabled]="!signupForm.valid">
+      Créer un Compte
+    </button>
+
+  </form>
+
+</ion-content>
