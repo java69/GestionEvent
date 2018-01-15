@@ -38,6 +38,7 @@ export class EventProvider {
   getEvent(idEvent:string): firebase.database.Reference {
     return this.eventListRef.child(idEvent);
   }
+  
 
   addGuest(nom: string, prenom: string, email: string, idEvent: string, prixEvent: number)
   : PromiseLike<any> {
