@@ -31,12 +31,22 @@
       </ion-item>
 
       <ion-item>
+              <ion-input class="bordureBottom" [(ngModel)]="adresseGuest" type="text"
+                         placeholder="Adresse du Participant"></ion-input>
+      </ion-item>
+
+      <ion-item>
         <ion-input class="bordureBottom" [(ngModel)]="emailGuest" type="text"
                    placeholder="Email du Participant"></ion-input>
       </ion-item>
 
+      <ion-item>
+              <ion-input class="bordureBottom" [(ngModel)]="telGuest" type="text"
+                         placeholder="Téléphone du Participant"></ion-input>
+      </ion-item>
+
       <button ion-button color="primary"
-              block [disabled]="!nomGuest || !prenomGuest || !emailGuest"
+              block [disabled]="!nomGuest || !prenomGuest || !adresseGuest || !emailGuest || !telGuest"
                (click)="addGuest(nomGuest, prenomGuest, emailGuest)">
         Ajouter Participant
       </button>
@@ -47,16 +57,43 @@
 
   <ion-card>
 
-    <ion-card-header>
-      {{currentEvent.nomEvent}} le {{currentEvent.dateEvent}}
+    <ion-card-header color="dark">
+      <strong>{{currentEvent.nomEvent}} le {{currentEvent.dateEvent}}</strong>
     </ion-card-header>
 
     <ion-card-content>
 
-      <ion-list>
+    <ion-list>
 
       <ion-item  class="bordureBottom" *ngFor="let guest of guestList">
-        <p class="bordeau"><strong>{{guest?.nom}} {{guest?.prenom}} - {{guest?.email}}</strong></p>
+
+        <ion-grid>
+         <ion-row>
+           <ion-col col-4><p class="bordeau"><strong>{{guest?.nom}}</strong></p></ion-col>
+           <ion-col col-4><p class="bordeau"><strong>{{guest?.prenom}}</strong></p></ion-col>
+         </ion-row>
+        </ion-grid>
+
+        <ion-grid>
+          <ion-row>
+            <ion-col col-2><ion-icon ios="ios-mail" md="md-mail"></ion-icon></ion-col>
+            <ion-col col-5><p class="bordeau">{{guest?.email}}</p></ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <ion-grid>
+          <ion-row>
+            <ion-col col-2><ion-icon ios="ios-call" md="md-call"></ion-icon></ion-col>
+            <ion-col col-5> <p class="bordeau">{{guest?.tel}}</p></ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <ion-grid>
+          <ion-row>
+           <ion-col col-2><ion-icon ios="ios-pin" md="md-pin"></ion-icon></ion-col>
+           <ion-col col-10> <p class="bordeau">{{guest?.adresse}}</p></ion-col>
+          </ion-row>
+        </ion-grid>
 
         <button ion-button color="primary" clear (click)="editGuest(guest.id)">
           Editer
@@ -72,7 +109,7 @@
         <p>Pas de participant inscrit à cet Event.</p>
       </ion-item>
 
-      </ion-list>
+    </ion-list>
 
     </ion-card-content>
 

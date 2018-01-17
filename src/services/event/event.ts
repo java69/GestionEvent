@@ -17,10 +17,10 @@ export class EventProvider {
   }
 
   createEvent( nom:string, adresse:string, date:string, horaire:string, prix:number,
-            cout: number, nbPlaces: number, etat:number): firebase.database.ThenableReference {
+            cout: number, nbPlaces: number): firebase.database.ThenableReference {
     return this.eventListRef.push({ nomEvent: nom, adresseEvent: adresse,
       dateEvent: date, horaireEvent: horaire, prixEvent: prix, coutEvent: cout, beneficeEvent: cout * -1,
-    nbPlacesEvent: nbPlaces, inscritsEvent: 0, etatEvent: etat});
+    nbPlacesEvent: nbPlaces, inscritsEvent: 0, etatEvent: 1});
   }
 
   updateEvent(idEvent:string, nom:string, adresse:string, date:string, horaire:string, prix:number,
@@ -38,9 +38,10 @@ export class EventProvider {
   getEvent(idEvent:string): firebase.database.Reference {
     return this.eventListRef.child(idEvent);
   }
-  
 
-  addGuest(nom: string, prenom: string, email: string, idEvent: string, prixEvent: number)
+
+  addGuest(nom: string, prenom: string, adresse: string, email: string,
+           tel: string, idEvent: string, prixEvent: number)
   : PromiseLike<any> {
     return this.eventListRef.child(`${idEvent}/guestList`)
       .push({ nomGuest:nom, prenomGuest:prenom, emailGuest:email}).then
@@ -55,14 +56,15 @@ export class EventProvider {
     });
   }
 
-  getGuest(idEvent:string, idGuest: string){
+  getGuest(idEvent:string, idGuest: string):firebase.database.Reference {
     return this.eventListRef.child(`${idEvent}/guestList/${idGuest}`);
   }
 
-  updateGuest(idEvent:string, idGuest:string, nom:string, prenom:string, email:string){
+  updateGuest(idEvent:string, idGuest:string, nom:string, prenom:string,adresse:string,
+              email:string, tel:string){
 
     this.getGuest(idEvent, idGuest).update({nomGuest:nom, prenomGuest:prenom,
-      emailGuest: email});
+      adresseGuest:adresse, emailGuest: email, telGuest: tel});
 
   }
 

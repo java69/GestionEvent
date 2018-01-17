@@ -13,7 +13,9 @@ export class GuestListPage {
   public currentEvent: any = {};
   public nomGuest = "";
   public prenomGuest = "";
+  public adresseGuest = "";
   public emailGuest = "";
+  public telGuest = "";
   public activeAddGuest: boolean = false;
 
 
@@ -23,14 +25,17 @@ export class GuestListPage {
 
   ionViewDidLoad() {
 
-    this.eventProvider.getGuestList(this.navParams.get("idEvent")).on("value", guestListSnapshot => {
+    this.eventProvider.getGuestList(this.navParams.get("idEvent"))
+      .on("value", guestListSnapshot => {
       this.guestList = [];
       guestListSnapshot.forEach(snap => {
         this.guestList.push({
           id: snap.key,
           nom: snap.val().nomGuest,
           prenom: snap.val().prenomGuest,
-          email: snap.val().emailGuest
+          email: snap.val().emailGuest,
+          adresse: snap.val().adresseGuest,
+          tel: snap.val().telGuest,
         });
         return false;
       });
@@ -69,8 +74,9 @@ export class GuestListPage {
       .on("value", guestSnapshot => {
         this.nomGuest = guestSnapshot.val().nomGuest;
         this.prenomGuest = guestSnapshot.val().prenomGuest;
+        this.adresseGuest = guestSnapshot.val().adresseGuest;
         this.emailGuest = guestSnapshot.val().emailGuest;
-
+        this.telGuest = guestSnapshot.val().telGuest;
       });
 
     const alert: Alert = this.alertCtrl.create({
@@ -89,9 +95,21 @@ export class GuestListPage {
         },
 
         {
+          name: "adresse",
+          placeholder: "Adresse du participant",
+          value: this.adresseGuest
+        },
+
+        {
           name: "email",
           placeholder: "Email du participant",
           value: this.emailGuest
+        },
+
+        {
+          name: "tel",
+          placeholder: "Téléphone du participant",
+          value: this.telGuest
         }
 
       ],
@@ -100,7 +118,8 @@ export class GuestListPage {
         {
           text: "Valider",
           handler: data => {
-            this.eventProvider.updateGuest(this.currentEvent.id, id, data.nom, data.prenom, data.email);
+            this.eventProvider.updateGuest(this.currentEvent.id, id, data.nom, data.prenom,
+              data.adresse, data.email, data.tel);
           }
         }
       ]
@@ -108,11 +127,11 @@ export class GuestListPage {
     alert.present();
   }
 
-  addGuest(nom: string, prenom: string, email: string): void {
+  addGuest(nom: string, prenom: string, adresse: string, email: string,
+           tel: string): void {
 
-    this.eventProvider.addGuest(nom, prenom, email, this.currentEvent.id, this.currentEvent.prixEvent)
+    this.eventProvider.addGuest(nom, prenom, adresse, email,tel,this.currentEvent.id, this.currentEvent.prixEvent)
       .then(newGuest => {
-        this.activeAddGuest = false;
 
         if (this.currentEvent.inscritsEvent == this.currentEvent.nbPlacesEvent) {
           const alert: Alert = this.alertCtrl.create({
@@ -124,6 +143,9 @@ export class GuestListPage {
           alert.present();
 
         }
+
+        this.activeAddGuest = false;
+
       });
   }
 
@@ -137,13 +159,15 @@ export class GuestListPage {
       });
       alert.present();
     }
-    else
-    this.activeAddGuest=true;
-    this.nomGuest = "";
-    this.prenomGuest = "";
-    this.emailGuest = ""
+    else {
+      this.activeAddGuest = true;
+      this.nomGuest = "";
+      this.prenomGuest = "";
+      this.adresseGuest = "";
+      this.emailGuest = "";
+      this.telGuest = "";
+    }
 
   }
-
 
 }

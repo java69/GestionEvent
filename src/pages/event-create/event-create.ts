@@ -15,7 +15,7 @@ export class EventCreatePage {
 
   createEvent(nom: string, adresse:string, date:string, horaire:string, prix: number,
               cout:number, nbPlaces:number): void {
-    this.eventProvider.createEvent(nom, adresse, date, horaire, prix, cout, nbPlaces, 1)
+    this.eventProvider.createEvent(nom, adresse, date, horaire, prix, cout, nbPlaces)
       .then(newEvent => {
         this.navCtrl.pop();
       });
