@@ -47,7 +47,7 @@
 
       <button ion-button color="primary"
               block [disabled]="!nomGuest || !prenomGuest || !adresseGuest || !emailGuest || !telGuest"
-               (click)="addGuest(nomGuest, prenomGuest, emailGuest)">
+               (click)="addGuest(nomGuest, prenomGuest, adresseGuest, emailGuest, telGuest)">
         Ajouter Participant
       </button>
 
@@ -65,7 +65,7 @@
 
     <ion-list>
 
-      <ion-item  class="bordureBottom" *ngFor="let guest of guestList">
+      <ion-item  class="bordureBottom" *ngFor="let guest of guestList; let i = index">
 
         <ion-grid>
          <ion-row>
@@ -95,7 +95,7 @@
           </ion-row>
         </ion-grid>
 
-        <button ion-button color="primary" clear (click)="editGuest(guest.id)">
+        <button ion-button color="primary" clear (click)="editGuest(guest.id,i)">
           Editer
         </button>
 

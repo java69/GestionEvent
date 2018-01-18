@@ -11,13 +11,13 @@ export class GuestListPage {
 
   public guestList: Array<any>;
   public currentEvent: any = {};
+  public currentGuest: any = {};
   public nomGuest = "";
   public prenomGuest = "";
   public adresseGuest = "";
   public emailGuest = "";
   public telGuest = "";
   public activeAddGuest: boolean = false;
-
 
   constructor(public navCtrl: NavController, public alertCtrl: AlertController,
               public navParams: NavParams, public eventProvider: EventProvider) {
@@ -48,6 +48,7 @@ export class GuestListPage {
       });
   }
 
+
   deleteGuest(idGuest: string): void {
 
     this.activeAddGuest = false;
@@ -67,17 +68,12 @@ export class GuestListPage {
     alert.present();
   }
 
-  editGuest(id: string) {
-    this.activeAddGuest = false;
 
-    this.eventProvider.getGuest(this.currentEvent.id, id)
-      .on("value", guestSnapshot => {
-        this.nomGuest = guestSnapshot.val().nomGuest;
-        this.prenomGuest = guestSnapshot.val().prenomGuest;
-        this.adresseGuest = guestSnapshot.val().adresseGuest;
-        this.emailGuest = guestSnapshot.val().emailGuest;
-        this.telGuest = guestSnapshot.val().telGuest;
-      });
+  editGuest(id: string, index: number) {
+
+    this.activeAddGuest = false;    
+    
+    
 
     const alert: Alert = this.alertCtrl.create({
       message: "Mise à jour participant",
@@ -85,31 +81,31 @@ export class GuestListPage {
         {
           name: "nom",
           placeholder: "Nom du participant",
-          value: this.nomGuest
+          value: this.guestList[index].nom
         },
 
         {
           name: "prenom",
           placeholder: "Prénom du participant",
-          value: this.prenomGuest
+          value:  this.guestList[index].prenom
         },
 
         {
           name: "adresse",
           placeholder: "Adresse du participant",
-          value: this.adresseGuest
+          value:  this.guestList[index].adresse
         },
 
         {
           name: "email",
           placeholder: "Email du participant",
-          value: this.emailGuest
+          value:  this.guestList[index].email
         },
 
         {
           name: "tel",
           placeholder: "Téléphone du participant",
-          value: this.telGuest
+          value:  this.guestList[index].tel
         }
 
       ],
@@ -127,8 +123,8 @@ export class GuestListPage {
     alert.present();
   }
 
-  addGuest(nom: string, prenom: string, adresse: string, email: string,
-           tel: string): void {
+
+  addGuest(nom: string, prenom: string, adresse: string, email: string, tel: string): void {
 
     this.eventProvider.addGuest(nom, prenom, adresse, email,tel,this.currentEvent.id, this.currentEvent.prixEvent)
       .then(newGuest => {
@@ -148,6 +144,7 @@ export class GuestListPage {
 
       });
   }
+
 
   setAddGuest(){
     if (this.currentEvent.inscritsEvent == this.currentEvent.nbPlacesEvent) {

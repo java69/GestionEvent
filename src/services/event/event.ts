@@ -44,7 +44,7 @@ export class EventProvider {
            tel: string, idEvent: string, prixEvent: number)
   : PromiseLike<any> {
     return this.eventListRef.child(`${idEvent}/guestList`)
-      .push({ nomGuest:nom, prenomGuest:prenom, emailGuest:email}).then
+      .push({ nomGuest:nom, prenomGuest:prenom, adresseGuest:adresse, emailGuest:email, telGuest:tel}).then
     (newGuest => {
       this.eventListRef.child(idEvent).transaction(event => {
         event.inscritsEvent += 1;
@@ -56,6 +56,7 @@ export class EventProvider {
     });
   }
 
+
   getGuest(idEvent:string, idGuest: string):firebase.database.Reference {
     return this.eventListRef.child(`${idEvent}/guestList/${idGuest}`);
   }
@@ -65,12 +66,13 @@ export class EventProvider {
 
     this.getGuest(idEvent, idGuest).update({nomGuest:nom, prenomGuest:prenom,
       adresseGuest:adresse, emailGuest: email, telGuest: tel});
-
   }
+
 
   getGuestList(idEvent:string): firebase.database.Reference {
     return this.eventListRef.child(`${idEvent}/guestList`);
   }
+
 
   deleteGuest(idEvent:string, idGuest: string): void {
 
