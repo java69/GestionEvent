@@ -167,4 +167,8 @@ export class GuestListPage {
 
   }
 
+  offAddGuest(){    
+    this.activeAddGuest = false;     
+  }
+
 }
