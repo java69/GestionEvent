@@ -23,6 +23,7 @@ export class EventProvider {
     nbPlacesEvent: nbPlaces, inscritsEvent: 0, etatEvent: 1});
   }
 
+
   updateEvent(idEvent:string, nom:string, adresse:string, date:string, horaire:string, prix:number,
             cout: number, nbPlaces: number) {
 
@@ -31,9 +32,11 @@ export class EventProvider {
       horaireEvent:horaire, prixEvent:prix, coutEvent:cout, nbPlacesEvent: nbPlaces});
   }
 
+
   getEventList(): firebase.database.Reference {
     return this.eventListRef;
   }
+  
 
   getEvent(idEvent:string): firebase.database.Reference {
     return this.eventListRef.child(idEvent);
@@ -61,11 +64,24 @@ export class EventProvider {
     return this.eventListRef.child(`${idEvent}/guestList/${idGuest}`);
   }
 
+
   updateGuest(idEvent:string, idGuest:string, nom:string, prenom:string,adresse:string,
               email:string, tel:string){
 
     this.getGuest(idEvent, idGuest).update({nomGuest:nom, prenomGuest:prenom,
       adresseGuest:adresse, emailGuest: email, telGuest: tel});
+  }
+
+
+  ajoutPhoto(idEvent:string, idGuest: string, photo:string){
+    
+    firebase.storage().ref(`/guestProfil/${idGuest}/profilePhoto.png`)
+    .putString(photo, 'base64', { contentType: 'image/png' })
+    .then(savedPhoto => {
+      this.eventListRef.child(`${idEvent}/guestList/${idGuest}/profilePhoto`)
+      .set(savedPhoto.downloadURL);
+    });
+
   }
 
 

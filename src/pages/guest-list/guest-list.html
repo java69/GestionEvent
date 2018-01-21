@@ -1,4 +1,3 @@
-
 <ion-header>
 
   <ion-navbar color="primary">
@@ -79,12 +78,19 @@
 
       <ion-item  class="bordureBottom" *ngFor="let guest of guestList; let i = index">
 
-        <ion-grid>
-         <ion-row>
-           <ion-col col-4><p class="bordeau"><strong>{{guest?.nom}}</strong></p></ion-col>
-           <ion-col col-4><p class="bordeau"><strong>{{guest?.prenom}}</strong></p></ion-col>
-         </ion-row>
-        </ion-grid>
+        <ion-item>
+           <h2 class="bordeau"><strong>{{guest?.nom}}</strong></h2>
+           <h2 class="bordeau"><strong>{{guest?.prenom}}</strong></h2>
+
+          <ion-thumbnail item-start *ngIf="guest?.photoUrl!=null">
+            <img src="{{guest?.photoUrl}}">
+          </ion-thumbnail>
+
+          <ion-thumbnail item-start *ngIf="guest?.photoUrl==null">
+            <img src="assets/imgs/guest.jpg"/>
+          </ion-thumbnail>
+          
+        </ion-item>
 
         <ion-grid>
           <ion-row>
@@ -99,7 +105,7 @@
             <ion-col col-5> <p class="bordeau">{{guest?.tel}}</p></ion-col>
           </ion-row>
         </ion-grid>
-
+<nav></nav>
         <ion-grid>
           <ion-row>
            <ion-col col-2><ion-icon ios="ios-pin" md="md-pin"></ion-icon></ion-col>
@@ -107,12 +113,16 @@
           </ion-row>
         </ion-grid>
 
-        <button ion-button color="primary" clear (click)="editGuest(guest.id,i)">
+        <button ion-button color="primary" clear (click)="editGuest(guest.id, i)"> 
           Editer
         </button>
 
         <button ion-button color="primary" clear (click)="deleteGuest(guest.id)">
           Supprimer
+        </button>
+
+        <button ion-button icon-only (click)="photographier(guest.id)">
+          <ion-icon name="camera"></ion-icon>
         </button>
 
       </ion-item>
@@ -126,7 +136,6 @@
     </ion-card-content>
 
   </ion-card>
-
 
 
 </ion-content>

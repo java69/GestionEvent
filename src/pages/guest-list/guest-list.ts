@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {Alert, AlertController, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {EventProvider} from "../../services/event/event";
+import { Camera } from '@ionic-native/camera';
 
 @IonicPage()
 @Component({
@@ -18,9 +19,10 @@ export class GuestListPage {
   public emailGuest = "";
   public telGuest = "";
   public activeAddGuest: boolean = false;
+  public photo: string = null;
 
-  constructor(public navCtrl: NavController, public alertCtrl: AlertController,
-              public navParams: NavParams, public eventProvider: EventProvider) {
+  constructor(public navCtrl: NavController, public alertCtrl: AlertController, public navParams: NavParams,
+     public eventProvider: EventProvider, public cameraPlugin: Camera) {
   }
 
   ionViewDidLoad() {
@@ -36,6 +38,7 @@ export class GuestListPage {
           email: snap.val().emailGuest,
           adresse: snap.val().adresseGuest,
           tel: snap.val().telGuest,
+          photoUrl:snap.val().profilePhoto
         });
         return false;
       });
@@ -68,12 +71,9 @@ export class GuestListPage {
     alert.present();
   }
 
-
   editGuest(id: string, index: number) {
 
-    this.activeAddGuest = false;    
-    
-    
+    this.activeAddGuest = false;       
 
     const alert: Alert = this.alertCtrl.create({
       message: "Mise à jour participant",
@@ -143,6 +143,7 @@ export class GuestListPage {
         this.activeAddGuest = false;
 
       });
+
   }
 
 
@@ -166,9 +167,35 @@ export class GuestListPage {
     }
 
   }
+  
 
   offAddGuest(){    
     this.activeAddGuest = false;     
+  }
+
+ 
+  photographier(idGuest: string): void {
+
+    this.cameraPlugin.getPicture( {
+      quality: 95,
+      destinationType: this.cameraPlugin.DestinationType.DATA_URL,
+      sourceType: this.cameraPlugin.PictureSourceType.CAMERA,
+      allowEdit: true,
+      encodingType: this.cameraPlugin.EncodingType.PNG,
+      targetWidth: 120,
+      targetHeight: 120,
+      saveToPhotoAlbum: true
+      })
+      .then(
+        imageData => {
+          this.photo = imageData;        
+          this.eventProvider.ajoutPhoto(this.currentEvent.id, idGuest, this.photo);
+        },
+        error => {
+          console.log("ERROR -> " + JSON.stringify(error));
+        }
+      );    
+
   }
 
 }

@@ -12,6 +12,7 @@ import {HttpModule} from "@angular/http";
 import {TabsPage} from "../pages/tabs/tabs";
 import {OutilsPage} from "../pages/outils/outils";
 import {AidePage} from "../pages/aide/aide";
+import { Camera } from '@ionic-native/camera';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import {AidePage} from "../pages/aide/aide";
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
     ProfileProvider,
-    EventProvider
+    EventProvider,
+    Camera
   ]
 })
 
