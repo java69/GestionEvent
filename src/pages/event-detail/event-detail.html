@@ -18,9 +18,9 @@
 
        <p>Coût = {{currentEvent?.coutEvent}} €</p>
 
-      <p [class.gain]="currentEvent?.beneficeEvent > 0"
-         [class.perte]="currentEvent?.beneficeEvent <= 0">
-        Gain actuel = {{currentEvent?.beneficeEvent}} €</p>
+      <p [class.gain]="beneficeEvent > 0"
+         [class.perte]="beneficeEvent <= 0">
+        Gain actuel = {{beneficeEvent}} €</p>
       <br>
 
       <p>Date: <strong>{{currentEvent?.dateEvent}}</strong></p>
@@ -36,11 +36,12 @@
           Inscrits: <strong>{{currentEvent?.inscritsEvent}}</strong>
         </ion-col>
 
-        <ion-col col-7 *ngIf="currentEvent?.etatEvent==1" class="gain">
+        <ion-col col-7 *ngIf="disponibilite==true" class="gain">
           - Places disponibles
         </ion-col>
 
-        <ion-col col-7  *ngIf="currentEvent?.etatEvent==0" class="perte">
+        
+        <ion-col col-7  *ngIf="disponibilite==false" class="perte">
           Complet
         </ion-col>
 

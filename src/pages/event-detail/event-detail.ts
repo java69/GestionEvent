@@ -9,12 +9,15 @@ import { EventProvider } from "../../services/event/event";
   selector: 'page-event-detail',
   templateUrl: 'event-detail.html',
 })
+
 export class EventDetailPage {
 
   public nomGuest: string = '';
   public prenomGuest: string = '';
   public emailGuest: string = '';
   public currentEvent: any = {};
+  public beneficeEvent: number;
+  public disponibilite:boolean;
 
   constructor(public navCtrl: NavController, public alertCtrl:AlertController,
               public navParams: NavParams, public eventProvider: EventProvider,
@@ -27,9 +30,18 @@ export class EventDetailPage {
       .on("value", eventSnapshot => {
         this.currentEvent = eventSnapshot.val();
         this.currentEvent.id = eventSnapshot.key;
-        this.currentEvent.beneficeEvent = (this.currentEvent.inscritsEvent*
+        this.beneficeEvent = (this.currentEvent.inscritsEvent*
           this.currentEvent.prixEvent) - (this.currentEvent.coutEvent);
+        
+        if(this.currentEvent.inscritsEvent==this.currentEvent.nbPlacesEvent) {
+          this.disponibilite=false;
+        }
+        else {
+          this.disponibilite=true;
+        }     
+     
       });
+      
   }
 
   goToGuestsPage(id:string):void{

@@ -70,6 +70,7 @@ export class GuestListPage {
     });
     alert.present();
   }
+  
 
   editGuest(id: string, index: number) {
 
@@ -148,6 +149,7 @@ export class GuestListPage {
 
 
   setAddGuest(){
+    
     if (this.currentEvent.inscritsEvent == this.currentEvent.nbPlacesEvent) {
       const alert: Alert = this.alertCtrl.create({
         message: "Cet Event est complet !",
@@ -167,7 +169,7 @@ export class GuestListPage {
     }
 
   }
-  
+
 
   offAddGuest(){    
     this.activeAddGuest = false;     

@@ -79,8 +79,8 @@
       <ion-item  class="bordureBottom" *ngFor="let guest of guestList; let i = index">
 
         <ion-item>
-           <h2 class="bordeau"><strong>{{guest?.nom}}</strong></h2>
-           <h2 class="bordeau"><strong>{{guest?.prenom}}</strong></h2>
+          <h2 class="bordeau"><strong>{{guest?.prenom}}</strong></h2>
+          <h2 class="bordeau"><strong>{{guest?.nom}}</strong></h2>
 
           <ion-thumbnail item-start *ngIf="guest?.photoUrl!=null">
             <img src="{{guest?.photoUrl}}">
@@ -105,7 +105,7 @@
             <ion-col col-5> <p class="bordeau">{{guest?.tel}}</p></ion-col>
           </ion-row>
         </ion-grid>
-<nav></nav>
+
         <ion-grid>
           <ion-row>
            <ion-col col-2><ion-icon ios="ios-pin" md="md-pin"></ion-icon></ion-col>

@@ -16,17 +16,14 @@
 
         <p>Date: <strong>{{event?.date}}</strong></p>
         <p>Lieu: <strong>{{event?.lieu}}</strong></p>
-        <p class="bleu" (click)="goToLocalisationPage(event.lieu)">Localisation
-          <ion-icon ios="ios-pin" md="md-pin" icon-end=""></ion-icon></p>
-
         <p>Horaire: <strong>{{event?.horaire}}</strong></p>
         <ion-col col-5>Inscrits: <strong>{{event?.inscrits}}</strong></ion-col>
 
-        <ion-col col-7 *ngIf="event?.etat==1" class="vert">
+        <ion-col col-7 *ngIf="event?.disponibilite==true" class="vert">
           - Places disponibles
         </ion-col>
 
-        <ion-col col-7 *ngIf="event?.etat==0" class="rouge">
+        <ion-col col-7 *ngIf="event?.disponibilite==false" class="rouge">
           Complet
         </ion-col>
 

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ElementRef } from '@angular/core';
 import firebase from 'firebase';
 
 @Injectable()
@@ -6,6 +6,7 @@ export class EventProvider {
 
   public eventListRef: firebase.database.Reference;
   public eventRef: firebase.database.Reference;
+  public currentEvent: any = {};
 
   constructor() {
     firebase.auth().onAuthStateChanged(user => {
@@ -15,23 +16,13 @@ export class EventProvider {
       }
     });
   }
+  
 
   createEvent( nom:string, adresse:string, date:string, horaire:string, prix:number,
             cout: number, nbPlaces: number): firebase.database.ThenableReference {
-    return this.eventListRef.push({ nomEvent: nom, adresseEvent: adresse,
-      dateEvent: date, horaireEvent: horaire, prixEvent: prix, coutEvent: cout, beneficeEvent: cout * -1,
-    nbPlacesEvent: nbPlaces, inscritsEvent: 0, etatEvent: 1});
+    return this.eventListRef.push({ nomEvent: nom, adresseEvent: adresse, dateEvent: date,
+    horaireEvent: horaire, prixEvent: prix, coutEvent: cout, nbPlacesEvent: nbPlaces, inscritsEvent: 0});
   }
-
-
-  updateEvent(idEvent:string, nom:string, adresse:string, date:string, horaire:string, prix:number,
-            cout: number, nbPlaces: number) {
-
-    this.eventRef = this.getEvent(idEvent);
-    this.eventRef.update({nomEvent:nom, adresseEvent:adresse, dateEvent:date,
-      horaireEvent:horaire, prixEvent:prix, coutEvent:cout, nbPlacesEvent: nbPlaces});
-  }
-
 
   getEventList(): firebase.database.Reference {
     return this.eventListRef;
@@ -43,17 +34,21 @@ export class EventProvider {
   }
 
 
+  updateEvent(idEvent:string, nom:string, adresse:string, date:string, horaire:string, prix:number,
+            cout: number, nbPlaces: number) {
+    this.eventRef = this.getEvent(idEvent);
+    this.eventRef.update({nomEvent:nom, adresseEvent:adresse, dateEvent:date,
+      horaireEvent:horaire, prixEvent:prix, coutEvent:cout, nbPlacesEvent: nbPlaces});          
+  }
+
+
   addGuest(nom: string, prenom: string, adresse: string, email: string,
-           tel: string, idEvent: string, prixEvent: number)
-  : PromiseLike<any> {
+           tel: string, idEvent: string, prixEvent: number): PromiseLike<any> {
     return this.eventListRef.child(`${idEvent}/guestList`)
       .push({ nomGuest:nom, prenomGuest:prenom, adresseGuest:adresse, emailGuest:email, telGuest:tel}).then
     (newGuest => {
       this.eventListRef.child(idEvent).transaction(event => {
         event.inscritsEvent += 1;
-        if(event.inscritsEvent==event.nbPlacesEvent){
-          event.etatEvent=0;
-        }
         return event;
       });
     });
@@ -100,5 +95,6 @@ export class EventProvider {
       });
     });
   }
+  
 
 }

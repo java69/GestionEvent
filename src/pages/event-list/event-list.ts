@@ -10,6 +10,7 @@ import { EventProvider } from "../../services/event/event";
 export class EventListPage {
 
   public eventList: Array<any>;
+  public disponibilite:boolean;
 
   constructor(public navCtrl: NavController,public alertCtrl:AlertController,
               public eventProvider: EventProvider) {
@@ -17,8 +18,14 @@ export class EventListPage {
 
   ionViewDidLoad() {
     this.eventProvider.getEventList().on("value", eventListSnapshot => {
-      this.eventList = [];
+      this.eventList = [];      
       eventListSnapshot.forEach(snap => {
+        if(snap.val().inscritsEvent==snap.val().nbPlacesEvent){
+          this.disponibilite=false;
+        }
+        else{
+          this.disponibilite=true;
+        }
         this.eventList.push({
           id: snap.key,
           nom: snap.val().nomEvent,
@@ -26,8 +33,7 @@ export class EventListPage {
           date: snap.val().dateEvent,
           horaire: snap.val().horaireEvent,
           inscrits: snap.val().inscritsEvent,
-          etat:snap.val().etatEvent
-
+          disponibilite:this.disponibilite
         });
         return false;
       });
@@ -38,10 +44,5 @@ export class EventListPage {
     this.navCtrl.push('EventDetailPage', { idEvent: id })
   }
 
-  goToLocalisationPage(adresse:string){
-
-    this.navCtrl.push('LocalisationPage', { adresse: adresse });
-
-  }
-
+ 
 }
